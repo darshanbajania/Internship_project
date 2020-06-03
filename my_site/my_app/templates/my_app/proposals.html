@@ -1,0 +1,78 @@
+{% extends 'my_app/profile.html' %}
+ {% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {% block content %}
+    <style>
+body {
+    background-image: url("{{ MEDIA_URL }}my_app/back.jpg");
+    background-repeat: no-repeat;
+    background-origin: content-box, padding-box;
+    background-attachment: fixed;
+    background-size: cover;
+   }
+
+  .cardBack {
+    background-color: rgba(255,255,255,0.85)
+  }
+
+  label[for="id_pdfs"] {
+      width:90px;
+      backgroundbackground-color: rgba(255,255,255);
+    display: none;
+   
+}
+
+input[type="file" i] {
+
+    
+    cursor: default;
+    display: inline-block;
+    color: blue;
+    text-align: center !important;
+    padding: 10px;
+
+}
+
+</style>
+
+<div class="container"> 
+  <div id="accordion">
+   <h3 class="list-group-item active mt-5 mb-0 text-center "> Your Proposals</h3>
+    
+    {% for i in proposals %}
+
+
+  <div class="card mt-0.5 cardBack">
+  
+    <div class="card-header  text-center">
+      <a class="card-link " data-toggle="collapse" href="#collapset{{ forloop.counter }}">
+        <h4>Proposal {{ forloop.counter }}</h4>
+      </a>
+    </div>
+    <div id="collapset{{ forloop.counter }}" class="collapse" data-parent="#accordion">
+      <div class="card-body">
+     {{ i }}
+      </div>
+    </div>
+  </div>
+
+
+
+    
+    {% endfor %}
+    </div>
+      
+</div>
+
+    {% endblock content %}
+</body>
+</html>

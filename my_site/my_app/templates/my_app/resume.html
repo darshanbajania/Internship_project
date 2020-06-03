@@ -1,0 +1,69 @@
+{% extends 'my_app/profile.html' %}
+ {% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {% block content %}
+    <style>
+body {
+    background-image: url("{{ MEDIA_URL }}my_app/back.jpg");
+    background-repeat: no-repeat;
+    background-origin: content-box, padding-box;
+    background-attachment: fixed;
+    background-size: cover;
+   }
+
+  .cardBack {
+    background-color: rgba(255,255,255,0.7)
+  }
+
+  label[for="id_pdfs"] {
+      width:90px;
+      backgroundbackground-color: rgba(255,255,255);
+    display: none;
+   
+}
+
+input[type="file" i] {
+
+    
+    cursor: default;
+    display: inline-block;
+    color: blue;
+    text-align: center !important;
+    padding: 10px;
+
+}
+
+</style>
+<div class="container d-flex justify-content-center p-5 ">
+<div class="card cardBack p-5">
+<div class-="card-body text-center d-flex justify-content-center ">    
+<div class="d-inline"><h2 class="text-center ">Upload Resume</h2>
+<br>
+<a>Step 1 : Select a pdf file to upload:</a>
+</br>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+   <div class="text-center">
+    {{ r_form.as_p }}
+    </div>
+    <a> Step 2 : Now upload it to Servers</a>
+    <br>
+    <button type="submit" class="btn btn-success text-center">Upload your Resume here </button>
+</br>
+</form>
+</div>
+</div>
+</div>
+</div>
+    {% endblock content %}
+</body>
+</html>

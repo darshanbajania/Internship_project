@@ -1,0 +1,67 @@
+{% extends 'my_app/profile.html' %}
+ {% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {% block content %}
+    <style>
+body {
+    background-image: url("{{ MEDIA_URL }}my_app/back.jpg");
+    background-repeat: no-repeat;
+    background-origin: content-box, padding-box;
+    background-attachment: fixed;
+    background-size: cover;
+   }
+
+  .cardBack {
+    background-color: rgba(255,255,255,0.7)
+  }
+
+  label[for="id_pdfs"] {
+      width:90px;
+      backgroundbackground-color: rgba(255,255,255);
+    display: none;
+   
+}
+
+input[type="file" i] {
+
+    
+    cursor: default;
+    display: inline-block;
+    color: blue;
+    text-align: center !important;
+    padding: 10px;
+
+}
+
+</style>
+
+<div class="container mt-5">
+
+
+<div class="card cardBack">
+    <div class="card-body text-center">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}  
+            <div class="form ">    
+              {{ p_form.as_p }}
+            </div>
+        
+          </div>   
+          <button type="submit" class="btn btn-primary btn-lg active" >Update</button>
+          </div>      
+        
+          </form>
+    </div>
+
+ {% endblock content %}
+</body>
+</html>
