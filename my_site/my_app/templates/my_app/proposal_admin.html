@@ -1,0 +1,185 @@
+{% extends 'my_app/admin_profile.html' %}
+
+{% block content %}
+
+
+<style>
+  body {
+    background-color: rgb(255, 255, 255)
+  }
+
+  .btncolour {
+    background-color: rgb(52, 58, 64)
+  }
+
+  .btncolor1 {
+    background-color: rgb(108, 117, 125)
+  }
+
+  .btncolor2 {
+    background-color: rgb(223, 231, 237)
+  }
+
+  .popover {
+    max-width: 1100px;
+    margin: 25px;
+  }
+
+  .card-columns {
+    @include media-breakpoint-only(lg) {
+      column-count: 4;
+    }
+
+    @include media-breakpoint-only(xl) {
+      column-count: 5;
+    }
+
+  }
+</style>
+
+
+<script>
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+</script>
+<div class="container d-flex">
+  <div class="row">
+    <div class="row  m-3">
+      {% for contact in paginator %}
+      <div class="col-md-4">
+        <div class="card  shadow mb-4 ">
+          <div class="card-body btncolor2">
+            <h5 class="card-title">
+              {% if value == 0 %}
+              <h5 class="text-dark" style="font-family:Arial, Helvetica, sans-serif;font-size:28px;">
+                {{ contact.title|capfirst }} </h5>
+              {% elif forloop.counter == 10 %}
+
+              <h5 class="text-dark">{{ contact.title|capfirst }}</h5>
+
+
+
+              {% else %}
+              <h5 class="text-dark">{{ contact.title|capfirst }}</h5>
+
+              {% endif %}
+
+            </h5>
+
+            <h6 class="card-subtitle my-2 text-muted">
+              <p class="text-primary mb-0">SVM: {{ contact.svm_categories }}</p> <br>
+              <p class="text-success mt-0">Rule Based: {{ contact.category }}</p><br>
+              <p class="bt-2">Mentor: {{ contact.mentor_assigned }}</p>
+            </h6>
+            
+            <div class="d-flex ">
+            <button type="button" class="btn btn-lg bg-dark text-light" data-trigger="focus" data-placement="top"
+              data-toggle="popover" title="Summary"
+              data-content="{{ contact.summary|capfirst }} ">Summary</button>
+              <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="{{ contact.ids }}" name="proposal" value="{{ contact.ids }}"
+                  class="btn  bg-dark text-light ml-2">
+                <button type="submit" class="btn btn-lg bg-dark text-light ml-2">View</button>
+              </form>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="collapse multi-collapse" id="multiCollapseExample{{ forloop.counter }}">
+                <div class="card card-body">
+                  {{ contact }}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div> {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="container my-5">
+  <div class="card rounded text-dark ">
+    <div class="card-body btncolor2">
+
+
+
+
+      {% comment %} <div id="accordion" class="my-0">
+        <h3 class="list-group-item   btncolour text-light text-center rounded "
+          style="font-family:Arial, Helvetica, sans-serif;font-size:32px;"> Your Proposals</h3>
+        {% for contact in paginator %}
+        {# Each "contact" is a Contact model object. #}
+        <br>
+        <div class="card btncolor1 my-0 ">
+
+          <div class="card-header  text-center">
+            <a class="card-link  bt" data-toggle="collapse" href="#collapset{{ forloop.counter }}">
+              {% if value == 0 %}
+              <h4 class="text-light" style="font-family:Arial, Helvetica, sans-serif;font-size:28px;">Proposal
+                {{ forloop.counter }}</h4>
+              {% elif forloop.counter == 10 %}
+
+              <h4 class="text-light">Proposal {{ range }}</h4>
+
+
+
+              {% else %}
+              <h4 class="text-light">Proposal {{ value }}{{ forloop.counter }}</h4>
+
+              {% endif %}
+            </a>
+          </div>
+          <div id="collapset{{ forloop.counter }}" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+              {{ contact }}
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% endcomment %}
+        <div>
+          <div class="paginatio text-center">
+            <span class="step-links">
+              {% if paginator.has_previous %}
+              <a class="text-dark m-2" style="font-family:Arial, Helvetica, sans-serif;font-size:24px;"
+                href="?page=1">&laquo;
+                First</a>
+              <a class="text-dark mr-5" style="font-family:Arial, Helvetica, sans-serif;font-size:24px;"
+                href="?page={{ paginator.previous_page_number }}">previous</a>
+              {% endif %}
+
+              <span class="current text-dark m-2" style="font-family:Arial, Helvetica, sans-serif;font-size:24px;">
+                Page {{ paginator.number }} of {{ paginator.paginator.num_pages }}
+              </span>
+
+              {% if paginator.has_next %}
+              <a class="text-dark ml-5" style="font-family:Arial, Helvetica, sans-serif;font-size:24px;"
+                href="?page={{ paginator.next_page_number }}">Next</a>
+              <a class="text-dark m-2" style="font-family:Arial, Helvetica, sans-serif;font-size:24px;"
+                href="?page={{ paginator.paginator.num_pages }}">Last &raquo;</a>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  {% endblock  %}

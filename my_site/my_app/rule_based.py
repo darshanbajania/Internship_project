@@ -9,9 +9,9 @@ import string
 import re
 import numpy as np
 #from mentorskills import *
-PATH = 'my_app/proposals.csv'
+PATH = './media/rule_based/proposals.csv'
 #PATH = 'resolved.txt'
-PATH_MENTOR_SKILLS = 'my_app/mentors.csv'
+PATH_MENTOR_SKILLS = './media/rule_based/mentors.csv'
 
 def read_skills(PATH):
    f = open(PATH)
@@ -66,7 +66,7 @@ def get_data(PATH):
    f = open(PATH,'r',encoding="utf-8")
    props = f.readlines()
    f.close()
-   f = open('my_app/skill_dict.txt')
+   f = open('./media/rule_based/skill_dict.txt')
    skills = f.readlines()
    f.close()
    skills = [x[:-1] for x in skills]
@@ -175,10 +175,9 @@ def wrapper(PATH,PATH_MENTOR_SKILLS,l=[-1 for x in range(19)]):
    mentor_data = read_skills(PATH_MENTOR_SKILLS)
    mentor_data_cleaned = eliminate_skills(mentor_data)
    temp = convert2std(mentor_data_cleaned,skills)
-   print(temp)
    #final = match_proposals(temp,proposal_skills,results)
    final = alt_match(temp,proposal_skills,l)
-   return final,proposals      
+   return final,proposals,temp     
          
 #l = [-1 for x in range(19)]
 #l[3] = 22   

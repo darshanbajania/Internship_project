@@ -1,78 +1,193 @@
 {% extends 'my_app/profile.html' %}
- {% load static %} 
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 
 <body>
-    {% block content %}
-    <style>
-body {
-    background-image: url("{{ MEDIA_URL }}my_app/back.jpg");
-    background-repeat: no-repeat;
-    background-origin: content-box, padding-box;
-    background-attachment: fixed;
-    background-size: cover;
-   }
+  {% block content %}
+  <style>
+    body {
+      background-color: rgb(255, 255, 255)
+    }
 
-  .cardBack {
-    background-color: rgba(255,255,255,0.85)
-  }
+    .btncolour {
+      background-color: rgb(52, 58, 64)
+    }
 
-  label[for="id_pdfs"] {
-      width:90px;
-      backgroundbackground-color: rgba(255,255,255);
-    display: none;
-   
-}
+    .btncolor1 {
+      background-color: rgb(108, 117, 125)
+    }
 
-input[type="file" i] {
+    .btncolor2 {
+      background-color: rgb(223, 231, 237)
+    }
 
-    
-    cursor: default;
-    display: inline-block;
-    color: blue;
-    text-align: center !important;
-    padding: 10px;
+    label[for="id_pdfs"] {
+      width: 90px;
+      background-color: rgba(255, 255, 255);
+      display: none;
 
-}
+    }
 
-</style>
-
-<div class="container"> 
-  <div id="accordion">
-   <h3 class="list-group-item active mt-5 mb-0 text-center "> Your Proposals</h3>
-    
-    {% for i in proposals %}
+    input[type="file"i] {
 
 
-  <div class="card mt-0.5 cardBack">
-  
-    <div class="card-header  text-center">
-      <a class="card-link " data-toggle="collapse" href="#collapset{{ forloop.counter }}">
-        <h4>Proposal {{ forloop.counter }}</h4>
-      </a>
-    </div>
-    <div id="collapset{{ forloop.counter }}" class="collapse" data-parent="#accordion">
-      <div class="card-body">
-     {{ i }}
+      cursor: default;
+      display: inline-block;
+      color: blue;
+      text-align: center !important;
+      padding: 10px;
+
+    }
+
+    .popover {
+      max-width: 1100px;
+      margin: 25px;
+    }
+  </style>
+
+
+  <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+  </script>
+  <div class="container d-flex">
+    <div class="row">
+      <div class="row  m-3">
+        {% for contact in paginator %}
+        <div class="col-md-4">
+          <div class="card shadow mb-4 ">
+            <div class="card-body btncolor2">
+              <h5 class="card-title">
+                {% if value == 0 %}
+                <h4 class="text-dark" style="font-family:Arial, Helvetica, sans-serif;font-size:28px;">
+                  {{ contact.title|capfirst }}</h4>
+                {% elif forloop.counter == 10 %}
+
+                <h4 class="text-dark">{{ contact.title|capfirst }}</h4>
+
+
+
+                {% else %}
+                <h5 class="text-dark">{{ contact.title|capfirst }}</h5>
+
+                {% endif %}
+
+              </h5>
+              <h6 class="card-subtitle my-2 text-muted">
+                <p class="text-primary mb-0">SVM: {{ contact.svm_categories }}</p> <br>
+                <p class="text-success mt-0">Rule Based: {{ contact.category }}</p>
+              </h6>
+
+              <div class="d-flex">
+                              <button type="button" class="btn btn-lg bg-dark text-light" data-trigger="focus" data-placement="top"
+                data-toggle="popover" title="Summary"
+                data-content="{{ contact.summary|capfirst }} ">Summary</button>
+
+              {% comment %} <button class="btn btn-lg bg-dark text-light ml-2" type="button">View</button>
+              {% endcomment %}
+              <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="{{ contact.ids }}" name="proposal" value="{{ contact.ids }}"
+                  class="btn  bg-dark text-light ml-2">
+                <button type="submit" class="btn btn-lg bg-dark text-light ml-2">View</button>
+              </form>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="collapse multi-collapse" id="multiCollapseExample{{ forloop.counter }}">
+                  <div class="card card-body">
+                    {{ contact }}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div> {% endfor %}
       </div>
     </div>
   </div>
 
 
+  <div class="container my-5 rounded">
+    <div class="card rounded btncolor2">
+      <div class="card-body text-light btncolor2">
+        {% comment %} <div id="accordion">
+          <h3 class="list-group-item   btncolour text-center text-light rounded"
+            style="font-family:Arial, Helvetica, sans-serif;font-size:32px;"> Your Proposals</h3>
+          {% for contact in paginator %}
+          {# Each "contact" is a Contact model object. #}
+          <br>
+          <div class="card mt-0.5 btncolor1 shadow  ">
 
-    
-    {% endfor %}
+            <div class="card-header  text-center">
+              <a class="card-link " data-toggle="collapse" href="#collapset{{ forloop.counter }}">
+                {% if value == 0 %}
+                <h4 class="text-light">Proposal {{ forloop.counter }}</h4>
+                {% elif forloop.counter == 10 %}
+
+                <h4 class="text-light" style="font-family:Arial, Helvetica, sans-serif;font-size:24px;">Proposal
+                  {{ last }}
+                </h4>
+
+
+
+                {% else %}
+                <h4 class="text-light" style="font-family:Arial, Helvetica, sans-serif;font-size:24px;">Proposal
+                  {{ value }}{{ forloop.counter }}</h4>
+
+                {% endif %}
+              </a>
+            </div>
+            <div id="collapset{{ forloop.counter }}" class="collapse" data-parent="#accordion">
+              <div class="card-body">
+                {{ contact }}
+              </div>
+            </div>
+          </div>
+          {% endfor %} {% endcomment %}
+          <div>
+            <div class="paginatio text-center">
+              <span class="step-links">
+                {% if paginator.has_previous %}
+                <a style="font-family:Arial, Helvetica, sans-serif;font-size:24px;" class="text-dark m-2"
+                  href="?page=1">&laquo;
+                  First </a>
+                <a style="font-family:Arial, Helvetica, sans-serif;font-size:24px;" class="text-dark mr-5"
+                  href="?page={{ paginator.previous_page_number }}"> Previous </a>
+                {% endif %}
+
+                <span style="font-family:Arial, Helvetica, sans-serif;font-size:24px;"
+                  class="current text-center m-2 text-dark">
+                  Page {{ paginator.number }} of {{ paginator.paginator.num_pages }}
+                </span>
+
+                {% if paginator.has_next %}
+                <a style="font-family:Arial, Helvetica, sans-serif;font-size:24px;" class="text-dark ml-5"
+                  href="?page={{ paginator.next_page_number }}"> Next </a>
+                <a style="font-family:Arial, Helvetica, sans-serif;font-size:24px;" class="text-dark m-2"
+                  href="?page={{ paginator.paginator.num_pages }}"> Last &raquo;</a>
+                {% endif %}
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-      
-</div>
+
 
     {% endblock content %}
 </body>
+
 </html>

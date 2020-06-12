@@ -1,0 +1,40 @@
+{% extends 'my_app/profile.html' %}
+
+
+{% block content %}
+<style>
+    body {
+      background-color: rgb(255, 255, 255)
+    }
+
+    .btncolour {
+      background-color: rgb(52, 58, 64)
+    }
+
+    .btncolor1 {
+      background-color: rgb(223, 231, 237)
+    }
+  </style>
+
+
+<div class="container">
+<div class="card my-5">
+<div class="card-body btncolor1 ">
+<ul class="list-group  list-group-flush">
+  <li class="list-group-item bg-dark text-center text-white"><h4>{{ proposal.title|capfirst }}</h4></li>
+  <li class="list-group-item bg-dark text-white"><h4>SVM based Categories: </h4><p>{{ proposal.svm_categories|capfirst }}</p></li>
+  <li class="list-group-item bg-dark text-white"><h4>Rule Based Categories: </h4><p>{{ proposal.category|capfirst }}</p></li>
+  
+  <li class="list-group-item bg-dark text-center text-white"><h4>Text</h4></li>
+  <li class="list-group-item bg-dark text-center text-white"><p>{{ proposal.text|capfirst }}</p></li>
+  <li class="list-group-item bg-dark text-center text-white "><h4>Summary</h4></li>
+  <li class="list-group-item bg-dark text-center text-white "><p>{{ proposal.summary|capfirst }}</p></li>
+
+</ul>
+</div>
+</div>
+</div>
+
+
+
+{% endblock  %}

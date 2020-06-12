@@ -1,0 +1,99 @@
+{% extends 'my_app/admin_profile.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  {% block content %}
+  <style>
+    body {
+      background-color: rgb(255, 255, 255)
+    }
+
+    .btncolour {
+      background-color: rgb(52, 58, 64)
+    }
+
+    .btncolor1 {
+      background-color: rgb(108, 117, 125)
+    }
+
+    .btncolor2 {
+      background-color: rgb(223, 231, 237)
+    }
+
+    label[for="id_pdfs"] {
+      width: 90px;
+      background-color: rgba(255, 255, 255);
+      display: none;
+
+    }
+
+label[for="id_emails"] {
+  visibility:hidden;
+}
+label[for="id_emails"]::after{
+  visibility: visible;
+  display: block;
+  content: 'Email: ';
+  padding: 5px;
+}
+    input[type="file"i] {
+
+
+      cursor: default;
+      display: inline-block;
+      color: blue;
+      text-align: center !important;
+      padding: 10px;
+
+    }
+  </style>
+
+  <div class="container mt-5 " style="width: 800px;">
+
+
+    <div class="card btncolor2">
+      <div class="card-body text-left">
+        <div class="">
+          {% if form.errors %}
+          <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <p>{% for error in form.errors %} enter the {{ error }} again{% endfor %}</p>
+          </div>
+          {% endif %}
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form " style="font-family:Arial, Helvetica, sans-serif;font-size:22px;">
+            {{ p_form.as_p }}
+          </div>
+
+      </div>
+      <div class="container w-30 m-3 text-center">
+        <button type="submit" class="btn active mx-2 btncolour text-light"
+          style="font-family:Arial, Helvetica, sans-serif;font-size:24px;">Update</button>
+
+
+        <a class="btn  active btncolour text-light mx-2" style="Arial, Helvetica, sans-serif;font-size:24px;"
+          href="{% url 'my_app:password_change' %}">Change password</a>
+      </div>
+      </form>
+
+      {% comment %} <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        wrong choice
+      </div> {% endcomment %}
+    </div>
+  </div>
+  {% endblock content %}
+</body>
+
+</html>

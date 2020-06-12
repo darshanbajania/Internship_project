@@ -1,0 +1,18 @@
+C/C++:c/c++,c,c++
+Python:python
+Java:java
+Computer Vision:opencv,image
+Image Processing:image,camera,photo
+Machine Learning:machine learning,neural,language,nlp,ml,prediction,intelligence,artificial
+Neural Networks:neural,prediction,tensorflow,pytorch
+Web Design:website,ui,login,cloud,web,internet,online,internet
+Unity:unity
+Android App:android,bluetooth,android app,app,smartphone,mobile
+Microcontrollers/Embedded_Systems:micro,controller,arduino,esp,avr,embedded,pi,microcontroller
+Gazebo:gazebo
+Arduino/ESPseries:micro,controller,arduino,esp8266,esp,esp32,avr,embedded
+IOT:cloud,iot,server,internet
+CAD:cad,design
+Sensors:sensor,data,gps,scanner,biometric,sensors
+Raspberry Pi:raspberry,raspberry pi,pi
+Robotics:robot,bot,motor,arduino,circuit,drone,uav,quad,hardware
