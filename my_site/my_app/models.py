@@ -22,12 +22,12 @@ class Mentors(models.Model):
 
 
 class Proposal(models.Model):
-    category = models.CharField(default='no text',max_length=500)
+    category = models.CharField(default='no text',max_length=500,blank=True)
     ids = models.TextField(default='no id',max_length=10)
     summary = models.TextField(default='no summary',max_length=4000)
-    svm_categories = models.CharField(default='no svm categories',max_length=200)
+    svm_categories = models.CharField(default='no svm categories',max_length=200,blank = True)
     text = models.TextField(default='no text',max_length=10000)
-    title =models.CharField(default='no title',max_length=200)
+    title =models.CharField(default='no title',max_length=500)
     mentor_assigned=models.CharField(default='no mentor assigned',max_length=100)
 
     def __str__(self):

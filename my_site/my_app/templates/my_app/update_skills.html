@@ -60,17 +60,23 @@
                     </div>
 
                 </div>
-                <div class="d-flex justify-content-center">
+                
                 <form method="POST">
                 {% csrf_token %}
-                <select class="bg-secondary text-light p-2"  id="ca" name="{{ key }}">
+                <div class="d-flex mt-4 ">
+                <div class=" mx-1 ">
+                <select class="bg-secondary rounded text-light p-2 "  id="ca" name="{{ key }}">
                     <option class="bg-dark" value="{{values|add:1}}">Novice</option>
                     <option class="bg-dark"value="{{values|add:2}}">Intermediate</option>
                     <option class="bg-dark"value="{{values|add:3}}">Pro</option>
                 </select>
-                <button type="submit" class="btn btn-secondary mt-0 p-2">submit</button>
+                </div>
+                <div class="mx-1">
+                <button type="submit" class="btn btn-secondary  p-2">Submit</button>
+                  </div>
+                  </div>
                 </form>
-   </div>
+ 
             </div>
             {% endfor %}
 

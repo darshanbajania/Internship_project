@@ -142,7 +142,7 @@ def Upload_Resume_View(request):
                                 instance=request.user.Profile)        
             if r_form.is_valid():#if form is valid then save it and return to profile
                 r_form.save()
-                return redirect('my_app:extracted_skills')
+                return redirect('my_app:profile')
             else:#else return to the same page
                 r_form = ResumeForm(instance = request.user.Profile)
         return render(request,'my_app/resume.html',{'r_form':r_form})
@@ -163,21 +163,24 @@ def Proposals_View(request):
             return redirect(url)
 
         c=0  
+        count = 0
         user=Mentors.objects.filter(name = request.user.username).first()
         b=user.user#getting the username)
         p=str(b)
         if(p==request.user.username):#checking if current user name matches with the mentors in database           
             if user.prop_no == "def" :
-                c=1
+                test = list(user.propsl_list.split(' '))
+                c=len(test)
+                count=0
                 bsc=Proposal.objects.filter(ids="abc") 
             else:
                 c=int(user.prop_no)#it is the no. of proposals      
                 count = 0
                 bsc=Proposal.objects.filter(ids="asd") 
-                for ele in list(user.propsl_list.split(' ')):#gettting the no. of proposals assigned to current mentor
-                    if count < c:
-                        mentor_proposals=Proposal.objects.filter(ids=str(ele))
-                        bsc=bsc|mentor_proposals
+            for ele in list(user.propsl_list.split(' ')):#gettting the no. of proposals assigned to current mentor
+                if count < c:
+                    mentor_proposals=Proposal.objects.filter(ids=str(ele))
+                    bsc=bsc|mentor_proposals
 
         #print(bsc)       
         pagin = Paginator(bsc, 12)#create a paginator having 12 items per page 
@@ -457,46 +460,46 @@ def Update_Skill_view(request):
         return redirect('my_app:login_view')
 
 #to show extracted skills
-def Extracted_Skills_view(request):
-    if request.session.has_key('is_logged_in'):
+# def Extracted_Skills_view(request):
+#     if request.session.has_key('is_logged_in'):
 
-        user_count=Mentors.objects.all().count()#counts all users in Mentors model
-        #loop for getting all the usernames
+#         user_count=Mentors.objects.all().count()#counts all users in Mentors model
+#         #loop for getting all the usernames
 
-        user=Mentors.objects.filter(name = request.user.username).first()
-        #print(user.user)
-        if user != None:
-            b=user.name#getting the username
-        #print(request.user.username)
-            p=str(b)
-            if(p==request.user.username):#checking if current user name matches with the mentors in database
-                #print(user.user)
-                #print(user.name)
-                with open('.'+user.pdfs.url, 'rb') as f:
-                    extracted_text = slate.PDF(f)
+#         user=Mentors.objects.filter(name = request.user.username).first()
+#         #print(user.user)
+#         if user != None:
+#             b=user.name#getting the username
+#         #print(request.user.username)
+#             p=str(b)
+#             if(p==request.user.username):#checking if current user name matches with the mentors in database
+#                 #print(user.user)
+#                 #print(user.name)
+#                 with open('.'+user.pdfs.url, 'rb') as f:
+#                     extracted_text = slate.PDF(f)
                 
-                # pdf_miner =  [x for x in extracted_text[0].split("\n") if x != ""]
-                # print(pdf_miner)
-                text=str(extracted_text)
-                text=text.split('][')
-                print(text)
-                extracted_skills=all_functions.skill_extract(text)[0]
-                print(extracted_skills)
-                extracted_skills_list=extracted_skills
-                # for p in pdf_miner:
-                #     c=p.lower()
+#                 # pdf_miner =  [x for x in extracted_text[0].split("\n") if x != ""]
+#                 # print(pdf_miner)
+#                 text=str(extracted_text)
+#                 text=text.split('][')
+#                 print(text)
+#                 extracted_skills=all_functions.skill_extract(text)[0]
+#                 print(extracted_skills)
+#                 extracted_skills_list=extracted_skills
+#                 # for p in pdf_miner:
+#                 #     c=p.lower()
                         
-                #     if "skills" in c:
-                #         skills=c.split('skills:-')
+#                 #     if "skills" in c:
+#                 #         skills=c.split('skills:-')
                         
-                #         skills=skills[1].split(', ')
+#                 #         skills=skills[1].split(', ')
                         
-                #         extracted_skills_list=eval(str(skills))
-                #         for j in extracted_skills_list:
-                #            print(j)
-        context={
-            'skills':extracted_skills_list,
-        }
-        return render(request,'my_app/extracted_skills.html',context)
-    else:
-        return redirect('my_app:login_view')
+#                 #         extracted_skills_list=eval(str(skills))
+#                 #         for j in extracted_skills_list:
+#                 #            print(j)
+#         context={
+#             'skills':extracted_skills_list,
+#         }
+#         return render(request,'my_app/extracted_skills.html',context)
+#     else:
+#         return redirect('my_app:login_view')

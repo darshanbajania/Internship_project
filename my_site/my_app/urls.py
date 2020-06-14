@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin_profile/', views.Admin_profile_view,name="admin_profile"),
     path('proposal/', views.Full_Proposal_view,name="full_proposal"),
     path('update_skills/', views.Update_Skill_view,name="update_skills"),
-    path('extracted_skills/', views.Extracted_Skills_view,name="extracted_skills"),
+    # path('extracted_skills/', views.Extracted_Skills_view,name="extracted_skills"),
     path('proposals_admin/', views.Full_Proposal_Admin_view,name="full_proposal_admin"),
     path('admin_update_profile/', views.Admin_Update_Profile_view,name="admin_update_profile"),
     path(

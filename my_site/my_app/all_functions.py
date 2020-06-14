@@ -70,6 +70,7 @@ def allocate_proposals_mentor():
             final_allocation_list[j].append(user_objects.prop_no)
     #print(final_allocation_list)  
     skills_allocated = rule_based1.allocate(final_allocation_list,new_list)
+    #print(skills_allocated)
     return skills_allocated
 
 
@@ -103,9 +104,13 @@ def store_allocated_proposals():
                     str1 = ""
                     count = 0
                     if h != None:
+                        #print(names)
                         for ele in names:#gettting the no. of proposals assigned to current mentor                            
                             if h=='def':
-                                str1='-1'
+                                if str1 == "":
+                                    str1=str(ele)
+                                else:    
+                                    str1=str1+ " " +str(ele)
                             else:    
                                 if count < int(h):
                                     if count == 0:
@@ -117,8 +122,8 @@ def store_allocated_proposals():
                         
                         user_objects.propsl_list=str1#assigning proposal no to current user
                         user_objects.save()
-                        #print(user_objects.name)
-                        #print(user_objects.propsl_list) 
+                        print(user_objects.name)
+                        print(user_objects.propsl_list) 
                         
     return     
 
@@ -281,12 +286,21 @@ def assign_mentor_to_proposals():
             user_objects=user.first()
             test_var = list(user_objects.propsl_list.split(' '))
             for i in test_var:
-                prop_var = Proposal.objects.filter(ids=i)
-                prop_variable=prop_var.first()
-                prop_variable.mentor_assigned = user_objects.name
-                prop_variable.save()
-                #print(user_objects.name)
-                #print(prop_variable.mentor_assigned)
+                if i == '-1':
+                    for k in range(0, 253):
+                        prop_temp = Proposal.objects.filter(ids=k)
+                        prop_temp_vairable = prop_temp.first()
+                        if prop_temp_vairable.mentor_assigned == user_objects.name:
+                            prop_temp_vairable.mentor_assigned = 'No Mentor Assigned'
+                            prop_temp_vairable.save()
+                        #print(prop_temp_vairable.mentor_assigned)
+                else:
+                    prop_var = Proposal.objects.filter(ids=i)
+                    prop_variable=prop_var.first()
+                    prop_variable.mentor_assigned = user_objects.name
+                    prop_variable.save()
+                    #print(user_objects.name)
+                    #print(prop_variable.mentor_assigned)
 
 
            
