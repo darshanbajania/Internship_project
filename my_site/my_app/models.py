@@ -1,14 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from cloudinary.models import CloudinaryField
 
 class Mentors(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='Profile')
     name = models.CharField(default='1',max_length=100)
     full_names = models.CharField(default='user',max_length=100)
     emails = models.EmailField(default='user@gmail.com')
-    image = models.ImageField(default='default.jpeg',upload_to='profile_pic')
+    image = CloudinaryField('avatar')
     pdfs = models.FileField(default='user.pdf',upload_to="props/pdfs")
+    resume = CloudinaryField('resume')
     prop_no = models.CharField(max_length=10,default='-1',null=True)
     propsl_list = models.CharField(default="0",max_length=300)
     skills = models.CharField(default="[]",max_length=300)

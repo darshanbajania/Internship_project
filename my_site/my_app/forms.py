@@ -1,11 +1,17 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Mentors
+from cloudinary.forms import CloudinaryFileField
 
 class ResumeForm(forms.ModelForm):
+    resume = CloudinaryFileField(
+    options = {
+        'folder': 'resume',
+        'resource_type':'raw',
+    })
     class Meta:
         model = Mentors
-        fields = ['pdfs']
+        fields = ['pdfs','resume']
 
 class UpdateUserForm(forms.ModelForm):
     class Meta:
@@ -13,8 +19,11 @@ class UpdateUserForm(forms.ModelForm):
         fields = ['email']
 
 class ProfileUpdateForm(forms.ModelForm):
+    image = CloudinaryFileField(
+    options = {
+        'folder': 'avatars'
+    })
     full_names = forms.CharField(label=('Name'))
-    image = forms.ImageField(label=('Image'),widget=forms.FileInput)
     class Meta:
         model = Mentors
         fields = [ 'full_names', 'emails', 'image']

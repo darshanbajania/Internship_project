@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import django_heroku
+import cloudinary
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -23,7 +24,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 SECRET_KEY = 'jx9o%9u_3d155wbi!acshs8l93#6eh=7kdh#5k9vlty2=2e9fh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True   
 
 ALLOWED_HOSTS = ['internshiprojecteysip.herokuapp.com']
 
@@ -38,7 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'my_app',
+    'cloudinary',
 ]
+
+#add config 
+cloudinary.config(
+  cloud_name = 'darshan1999',
+  api_key = '914179865436577',
+  api_secret = '4cz-_JUUtXQmRk_L6FbWvZbNgq0',
+  secure = True
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

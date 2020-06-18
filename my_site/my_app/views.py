@@ -112,6 +112,7 @@ def Profile_View(request):
                         #print(user.user)
                         #print(user.name)
                         user_skills=eval(user.skills)
+                        print(user.skill_level)
                         user_skills_level = eval(user.skill_level)                        
                         
                         if user.name == "1":                   

@@ -3,6 +3,7 @@ from . import views
 from django.contrib.auth.views import LoginView,LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve
 from django.contrib.auth import views as auth_views
 
 app_name="my_app"
@@ -36,6 +37,7 @@ urlpatterns = [
         success_url='done'),
     name='password_change'),
 ]
-
+# if not settings.DEBUG:
+#     urlpatterns += [ path(settings.MEDIA_URL, serve,{'document_root': settings.MEDIA_ROOT}), path(r'^static/(?P<path>.)$', serve,{'document_root': settings.STATIC_ROOT}), ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
