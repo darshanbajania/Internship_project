@@ -24,6 +24,7 @@ import pandas as pd
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
  
+#for text extraction 
 
 # with open('my_app/resume_list.pdf', 'rb') as f:
 #     extracted_text = slate.PDF(f)
@@ -112,16 +113,16 @@ def Profile_View(request):
                         #print(user.user)
                         #print(user.name)
                         user_skills=eval(user.skills)
-                        print(user.skill_level)
+                        #print(user.skill_level)
                         user_skills_level = eval(user.skill_level)                        
                         
                         if user.name == "1":                   
                             p=user
                             p.name=request.user.username
                             #print(p.name)
-                            p.save()
+                            p.save()#saving the username as name
             
-            print(user_skills_level.keys())
+            #print(user_skills_level.keys())
             level_count=3
             context = {
                 #'total_skills':total_skills,#total skills of current mentor
@@ -156,12 +157,12 @@ def Proposals_View(request):
         mentor_proposals=Proposal.objects.all()
         if request.method == "POST":
             proposal_number=request.POST.get('proposal')
-            base_url = reverse('my_app:full_proposal')  # 1 /products/
-            query_string =  urlencode({'category': proposal_number})  # 2 category=42
-            url = '{}?{}'.format(base_url, query_string)  # 3 /products/?category=42
+            base_url = reverse('my_app:full_proposal')  # getting the url for displaying full proposal
+            query_string =  urlencode({'category': proposal_number}) #creating a string of dictionary
+            url = '{}?{}'.format(base_url, query_string)  # passing the base_url and query from this page to url
          
             #print(proposal_number)
-            return redirect(url)
+            return redirect(url)# redirecting to the full proposal page
 
         c=0  
         count = 0
@@ -173,15 +174,15 @@ def Proposals_View(request):
                 test = list(user.propsl_list.split(' '))
                 c=len(test)
                 count=0
-                bsc=Proposal.objects.filter(ids="abc") 
+                bsc=Proposal.objects.filter(ids="abc") # initialising with None
             else:
                 c=int(user.prop_no)#it is the no. of proposals      
                 count = 0
-                bsc=Proposal.objects.filter(ids="asd") 
+                bsc=Proposal.objects.filter(ids="asd") # initializing with None
             for ele in list(user.propsl_list.split(' ')):#gettting the no. of proposals assigned to current mentor
                 if count < c:
-                    mentor_proposals=Proposal.objects.filter(ids=str(ele))
-                    bsc=bsc|mentor_proposals
+                    mentor_proposals=Proposal.objects.filter(ids=str(ele))#filtering the proposals mentioned in proposal_list
+                    bsc=bsc|mentor_proposals # cascading the proposals in a query list
 
         #print(bsc)       
         pagin = Paginator(bsc, 12)#create a paginator having 12 items per page 
@@ -224,21 +225,20 @@ def Login_View(request):
         return redirect('my_app:profile')
     if request.method == 'POST':#authanticate user using login page
         
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get('username')#getting the username of current user
+        password = request.POST.get('password')#getting the password of current user
         print(username, password)
 
         # check if user has entered correct credentials
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)#authenticating current user
 
-        if user is not None:
-            # A backend authenticated the credentials
-            login(request, user)
+        if user is not None:# A backend authenticated the credentials
+            login(request, user)#logging in the current user
             request.session['is_logged_in'] = True#make the session true after logging in
-            if (username == 'admin'):
+            if (username == 'admin'):#if user is admin redirect it to admin_page
                 return redirect('my_app:admin_page')
             else:
-                return redirect('my_app:profile')
+                return redirect('my_app:profile')#else to the user profile
 
         else:
             # No backend authenticated the credentials
@@ -257,20 +257,20 @@ def Total_Proposal_View(request):
 
         if request.method == "POST":
             proposal_number=request.POST.get('proposal')
-            base_url = reverse('my_app:full_proposal_admin')  # 1 /products/
-            query_string =  urlencode({'category': proposal_number})  # 2 category=42
-            url = '{}?{}'.format(base_url, query_string)  # 3 /products/?category=42
+            base_url = reverse('my_app:full_proposal_admin') # getting the url for displaying full proposal
+            query_string =  urlencode({'category': proposal_number}) #creating a string of dictionary
+            url = '{}?{}'.format(base_url, query_string)  # passing the base_url and query from this page to url
          
             #print(proposal_number)
             return redirect(url)
 
-        all_proposals=Proposal.objects.filter(ids='ds')
+        all_proposals=Proposal.objects.filter(ids='ds') #initializing query set with None
     
-        for i in range(0,495):
-            propsal_temp = Proposal.objects.filter(ids=str(i))
+        for i in range(0,495): 
+            propsal_temp = Proposal.objects.filter(ids=str(i))# filtering all the proposals
             if propsal_temp.first()!=None:
                 #print(propsal_temp.first().ids)
-                all_proposals=all_proposals|propsal_temp
+                all_proposals=all_proposals|propsal_temp #adding all proposals query set
 
         # all_proposals=Proposal.objects.all()
        #print(all_proposals)
@@ -312,31 +312,33 @@ def register_view(request):
 def Admin_view(request):
     if request.session.has_key('is_logged_in'):
         
-        mentors_list=Mentors.objects.filter(name='ds')
+        mentors_list=Mentors.objects.filter(name='ds')#initializing query set with None
         length = len(skills)
         for i in range(0,length):
-            name = list(proposal_list.items())[i][0]
-            new_mentor_name=all_functions.convert_space_to_us(name)            
-            user=Mentors.objects.filter(name = new_mentor_name)
+            name = list(proposal_list.items())[i][0]#list having name of Mentor 
+            new_mentor_name=all_functions.convert_space_to_us(name)#replacing space with underscore            
+            user=Mentors.objects.filter(name = new_mentor_name)#filtering the name 
             if user.first()!=None:
                 print(user.first().name)
-                mentors_list=mentors_list|user
+                mentors_list=mentors_list|user#adding the name of the user to the mentor list
 
         # all_functions.remove_comma_from_proposal()
 
-        if request.user.is_anonymous:
+        if request.user.is_anonymous:#if user is anonymous then redirect to login page
             return redirect('my_app:login_view') 
         if request.method == "POST":
-            for i in mentors_list:
-                mentor = i.name
-                new_prop_val = request.POST.get(mentor)
+            for i in mentors_list:# after allocate proposals is clicked
+                mentor = i.name # taking out each name
+                new_prop_val = request.POST.get(mentor)# getting proposal value from the form 
                 #print(mentor,new_prop_val)
                 i.prop_no = new_prop_val
-                i.save()
-            all_functions.store_allocated_proposals() 
-            all_functions.assign_mentor_to_proposals()                    
+                i.save()#saving the proposal no. for each and every user
+            all_functions.store_allocated_proposals()# calling the function to 
+                                                    #store proposal list in the database for each mentor
+            all_functions.assign_mentor_to_proposals()#this function assigns 
+                                                      #mentor name to each and every proposal                      
         print("success")
-        context = {'prods': mentors_list }
+        context = {'prods': mentors_list }#passing the mentors list to the admin page
         return render(request, 'my_app/admin_page.html',context)
     else:
         return redirect('my_app:login_view')
@@ -367,7 +369,7 @@ def Admin_profile_view(request):
     else:
         return redirect('my_app:login_view')
 
-
+#shows admin profile page
 def Admin_Update_Profile_view(request):
     if request.session.has_key('is_logged_in'):#checking for sessions
         if request.method == 'POST':#for creating an instance of profile update form with passed details
@@ -390,27 +392,27 @@ def Admin_Update_Profile_view(request):
         return redirect('my_app:login_view')
 
 
-#To display entire proposal
+#To display entire proposals for mentor
 def Full_Proposal_view(request):
     if request.session.has_key('is_logged_in'):
-        category_id = request.GET.get('category') 
-        proposalss=Proposal.objects.filter(ids=str(category_id)).first()
-        print("hello",proposalss) 
+        category_id = request.GET.get('category')#after getting the category value from 
+        proposalss=Proposal.objects.filter(ids=str(category_id)).first()#filtering the particular proposal
+        #print("hello",proposalss) 
         context={
             'proposal':proposalss
-        }
+        }#passing the proposal to the next page
         return render(request,'my_app/full_proposal.html',context)
     else:
         return redirect('my_app:login_view')
-
+# to display entire proposals for admin
 def Full_Proposal_Admin_view(request):
     if request.session.has_key('is_logged_in'):
-        category_id = request.GET.get('category') 
-        proposalss=Proposal.objects.filter(ids=str(category_id)).first()
-        print("hello",proposalss) 
+        category_id = request.GET.get('category') #after getting the category value from 
+        proposalss=Proposal.objects.filter(ids=str(category_id)).first()#filtering the particular proposal
+        #print("hello",proposalss) 
         context={
             'proposal':proposalss
-        }
+        }#passing the proposal to the next page
         return render(request,'my_app/full_proposal_admin.html',context)
     else:
         return redirect('my_app:login_view')
