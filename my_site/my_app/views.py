@@ -330,7 +330,7 @@ def Admin_view(request):
             for i in mentors_list:# after allocate proposals is clicked
                 mentor = i.name # taking out each name
                 new_prop_val = request.POST.get(mentor)# getting proposal value from the form 
-                #print(mentor,new_prop_val)
+                #new_prop_val=int(252/19)
                 i.prop_no = new_prop_val
                 i.save()#saving the proposal no. for each and every user
             all_functions.store_allocated_proposals()# calling the function to 
@@ -380,7 +380,7 @@ def Admin_Update_Profile_view(request):
             if p_form.is_valid():#if form is valid then save it
                 p_form.save()#and give a success messsage
                 messages.success(request, f'Your account has been updated')
-                return redirect('my_app:update_profile')
+                return redirect('my_app:admin_update_profile')
         else:#create an instance of form with current details
             p_form = ProfileUpdateForm(instance=request.user.Profile)
             print(p_form)
