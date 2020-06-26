@@ -87,18 +87,17 @@
               </h6>
 
               <div class="d-flex">
-                              <button type="button" class="btn btn-lg bg-dark text-light" data-trigger="focus" data-placement="top"
-                data-toggle="popover" title="Summary"
-                data-content="{{ contact.summary|capfirst }} ">Summary</button>
+                <button type="button" class="btn btn-lg bg-dark text-light" data-trigger="focus" data-placement="top"
+                  data-toggle="popover" title="Summary" data-content="{{ contact.summary|capfirst }} ">Summary</button>
 
-              {% comment %} <button class="btn btn-lg bg-dark text-light ml-2" type="button">View</button>
-              {% endcomment %}
-              <form method="POST">
-                {% csrf_token %}
-                <input type="hidden" id="{{ contact.ids }}" name="proposal" value="{{ contact.ids }}"
-                  class="btn  bg-dark text-light ml-2">
-                <button type="submit" class="btn btn-lg bg-dark text-light ml-2">View</button>
-              </form>
+                {% comment %} <button class="btn btn-lg bg-dark text-light ml-2" type="button">View</button>
+                {% endcomment %}
+                <form method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" id="{{ contact.ids }}" name="proposal" value="{{ contact.ids }}"
+                    class="btn  bg-dark text-light ml-2">
+                  <button type="submit" class="btn btn-lg bg-dark text-light ml-2">View</button>
+                </form>
               </div>
 
             </div>

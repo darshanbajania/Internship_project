@@ -2,28 +2,28 @@
 
 {% block content %}
 <div class="container">
-    <div class=" btncolour shadow-lg my-5">
-        <h4 class="list-group-item   text-center text-light shadow-lg btncolour  rounded"
-          style="font-family:Arial, Helvetica, sans-serif;font-size:32px;">Skills</h4>
-        <div class="album">
-          <div class="container">
-            <div class="row">
-                {% for skill in skills %}
-              <div class="col-md-4">
-                <div class="card mb-4 bg-secondary ">
-                  <div class="card-body  ">
-                    <strong>
-                      <p class="card-text text-light text-center py-2">{{ skill }}</p>
-                    </strong>
-                  </div>
-                </div>
+  <div class=" btncolour shadow-lg my-5">
+    <h4 class="list-group-item   text-center text-light shadow-lg btncolour  rounded"
+      style="font-family:Arial, Helvetica, sans-serif;font-size:32px;">Skills</h4>
+    <div class="album">
+      <div class="container">
+        <div class="row">
+          {% for skill in skills %}
+          <div class="col-md-4">
+            <div class="card mb-4 bg-secondary ">
+              <div class="card-body  ">
+                <strong>
+                  <p class="card-text text-light text-center py-2">{{ skill }}</p>
+                </strong>
               </div>
-              {% endfor %}
             </div>
           </div>
+          {% endfor %}
         </div>
-        </div>
-    
+      </div>
+    </div>
+  </div>
+
 </div>
 
 {% endblock  %}

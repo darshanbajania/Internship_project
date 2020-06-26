@@ -14,8 +14,6 @@ urlpatterns = [
     path('proposals/', views.Proposals_View, name='proposals'),
     path('update_profile/', views.Update_Profile_View, name='update_profile'),
     path('login/',views.Login_View, name = 'login_view'),
-    #path('logoutv/',views.Logout_View, name = 'logout_view'),
-    #path('login/', LoginView.as_view(), name='login_url'),
     path('register/', views.register_view, name='register_url'),
     path('password_reset/', views.password_Reset_View, name='password_reset'),
     path('logout/', LogoutView.as_view(next_page='my_app:login_view'),name="logout_url"),
@@ -37,7 +35,5 @@ urlpatterns = [
         success_url='done'),
     name='password_change'),
 ]
-# if not settings.DEBUG:
-#     urlpatterns += [ path(settings.MEDIA_URL, serve,{'document_root': settings.MEDIA_ROOT}), path(r'^static/(?P<path>.)$', serve,{'document_root': settings.STATIC_ROOT}), ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

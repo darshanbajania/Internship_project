@@ -44,31 +44,31 @@
       text-align: center !important;
       padding: 10px;
 
-    } 
+    }
 
-label[for="id_emails"] {
-  visibility:hidden;
-}
-label[for="id_emails"]::after{
-  visibility: visible;
-  display: block;
-  content: 'Email: ';
-  padding: 5px;
-  top: 2px;
-}
+    label[for="id_emails"] {
+      visibility: hidden;
+    }
 
-label[for="id_image"] {
-  visibility:hidden;
-}
-label[for="id_image"]::after{
-  visibility: visible;
-  display: block;
-  content: 'Image ';
-  padding: 5px;
-  top: 2px;
-}
+    label[for="id_emails"]::after {
+      visibility: visible;
+      display: block;
+      content: 'Email: ';
+      padding: 5px;
+      top: 2px;
+    }
 
+    label[for="id_image"] {
+      visibility: hidden;
+    }
 
+    label[for="id_image"]::after {
+      visibility: visible;
+      display: block;
+      content: 'Image ';
+      padding: 5px;
+      top: 2px;
+    }
   </style>
 
 
@@ -91,9 +91,9 @@ label[for="id_image"]::after{
           {% csrf_token %}
           <div class="form " style="font-family:Arial, Helvetica, sans-serif;font-size:22px;">
             {{ p_form.as_p }}
-   
 
-            
+
+
           </div>
 
       </div>
@@ -105,11 +105,11 @@ label[for="id_image"]::after{
         <a class="btn  active btncolour text-light mx-2" style="Arial, Helvetica, sans-serif;font-size:24px;"
           href="{% url 'my_app:password_change' %}">Change password</a>
 
- 
+
       </div>
       </form>
       <a class="btn  active btncolour text-light mx-2" style="Arial, Helvetica, sans-serif;font-size:24px;"
-          href="{% url 'my_app:update_skills' %}">Update skills</a>
+        href="{% url 'my_app:update_skills' %}">Update skills</a>
 
       {% comment %} <div class="alert alert-danger alert-dismissible">
         <button type="button" class="close" data-dismiss="alert">x</button>

@@ -72,18 +72,17 @@
               <p class="text-success mt-0">Rule Based: {{ contact.category }}</p><br>
               <p class="bt-2">Mentor: {{ contact.mentor_assigned }}</p>
             </h6>
-            
+
             <div class="d-flex ">
-            <button type="button" class="btn btn-lg bg-dark text-light" data-trigger="focus" data-placement="top"
-              data-toggle="popover" title="Summary"
-              data-content="{{ contact.summary|capfirst }} ">Summary</button>
+              <button type="button" class="btn btn-lg bg-dark text-light" data-trigger="focus" data-placement="top"
+                data-toggle="popover" title="Summary" data-content="{{ contact.summary|capfirst }} ">Summary</button>
               <form method="POST">
                 {% csrf_token %}
                 <input type="hidden" id="{{ contact.ids }}" name="proposal" value="{{ contact.ids }}"
                   class="btn  bg-dark text-light ml-2">
                 <button type="submit" class="btn btn-lg bg-dark text-light ml-2">View</button>
               </form>
-              </div>
+            </div>
           </div>
           <div class="row">
             <div class="col">
