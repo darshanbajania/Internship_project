@@ -1,7 +1,6 @@
 # created on 8/06/2020
 # by Bajania Darshan Kumar
 
-
 # importing required modules and files
 from .models import Mentors, Proposal
 from . import rule_based1

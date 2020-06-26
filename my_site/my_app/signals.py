@@ -1,3 +1,8 @@
+# created on 1/6/20
+
+# formatted on 5/6/20
+# by Darshan Bajania
+# this file helps in creating a new django user every time a new registration is done
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.dispatch import receiver
