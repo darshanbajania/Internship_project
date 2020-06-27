@@ -19,7 +19,9 @@ new_list = rule_based1.conv2dict(PATH)
 new_mentor_skills = rule_based1.mentor_skills(PATH_MENTOR_SKILLS)
 
 
-# to convert name with space to name with underscore
+#Role: to convert name with space to name with underscore
+#input:(string) username having space
+#Output:(string) name with underscore
 def convert_space_to_us(user_name):
     temp_name = ""
     for letter in user_name:
@@ -29,7 +31,9 @@ def convert_space_to_us(user_name):
     return temp_name
 
 
-# to convert name with underscore to name with space
+#Role: to convert name with underscore to name with space
+#input:(string) username having underscore
+#Output:(string) name with a space 
 def convert_us_to_space(user_name):
     temp_name = ""
     for letter in user_name:
@@ -39,7 +43,9 @@ def convert_us_to_space(user_name):
     return temp_name
 
 
-# for allocating mentors skills
+#Role: for allocating proposals to mentor
+#input: no input 
+#Output:(List of List) List of mentors along with proposals ids assigned to them 
 def allocate_proposals_mentor():
     final_allocation_list = []
     # print("new_mentor_skills:")
@@ -64,17 +70,17 @@ def allocate_proposals_mentor():
     # print(final_allocation_list)
     # passing the appended list to allocate function
     skills_allocated = rule_based1.allocate(final_allocation_list, new_list)
-    # print(skills_allocated)
     return skills_allocated
 
 
-# for storing the proposal no. in the database of mentor
+#Role: for saving storing the proposal no. in the database of mentor
+#input: no input
+#Output: no output 
 def store_allocated_proposals():
     # lenth of list containing mentors name i.e = 19
     length_of_skills = len(new_mentor_skills)
     allocated_skills = allocate_proposals_mentor()  # returns allocated proposals
     # print("hello")
-    # print(allocated_skills)
 
     # main loop for storing proposals in database
     for j in range(0, length_of_skills):
@@ -121,8 +127,8 @@ def store_allocated_proposals():
 
                         user_objects.propsl_list = str1  # assigning proposal ids to the mentor
                         user_objects.save()
-                        print(user_objects.name)
-                        print(user_objects.propsl_list)
+                        #print(user_objects.name)
+                        #print(user_objects.propsl_list)
 
     return
 
@@ -161,9 +167,11 @@ def store_allocated_proposals():
     #             #print(i.propsl_list)
 
 
-# for reassigning values in any field in Proposals model
+#Role: for reassigning values in any field in Proposals model
 # currently it is saving the rule based categories
 # but it can save other fields like 'Title', 'Text', 'Summary' etc.
+#input: no input
+#Output: no output
 def add_new_feild_proposal():
     for k in range(0, 253):
         propsal_temp = Proposal.objects.filter(ids=str(k))
@@ -181,10 +189,12 @@ def add_new_feild_proposal():
         print(temp_category.category)
 
 
-# for removing comma from avm categories
+#Role: for removing comma from avm categories
 # after saving SVM based categories to database,
 # in some proposals the comma remains at the begining of the field
 # so to remove such commas this function is used
+#input: no input
+#Output: no output
 def remove_comma_from_proposal():
     for k in range(0, 253):
         propsal_temp = Proposal.objects.filter(ids=str(k))
@@ -200,9 +210,11 @@ def remove_comma_from_proposal():
                 print(demo.svm_categories)
 
 
-# for creating new proposals
+#Role: for creating new proposals
 # This function is used populate newly created databse model
 # It takes all values from new_list which has all the proposal contents in a sequence
+#input: no input
+#Output: no output
 def create_new_proposals():
     length_of_proposals = len(new_list)
     for j in range(236, length_of_proposals):
@@ -223,11 +235,13 @@ def create_new_proposals():
     # p=pickle_model.predict(new_list)
     # print(p)
 
-# for inserting categories to proposals
+#Role: for inserting categories to proposals
 # This function reads model file one at a time and
 # predicts particular for all proposals
 # To add new category load the model file and write the category name
 # in place of ", Android App"
+#input: no input
+#Output: no output
 def insert_proposal_categories():
 
     with open('./media/svm_models/svm_android.pkl', 'rb') as file:
@@ -257,7 +271,9 @@ def insert_proposal_categories():
         print(demo.svm_categories)
 
 
-# To add mentor assigned to Proposals
+#Role: To add mentor assigned to Proposals
+#input: no input
+#Output: no output
 def assign_mentor_to_proposals():
     length_of_skills = len(new_mentor_skills)
 
@@ -293,7 +309,9 @@ def assign_mentor_to_proposals():
 
             # print(test_var)
 
-
+#Role: function to extract skills from pdf
+#input: extracted text from pdf
+#output: skills present in the text
 def skill_extract(texts):
     f = open('./media/rule_based/skill_dict.txt')
     skills = f.readlines()
@@ -320,7 +338,9 @@ def skill_extract(texts):
     return skillset
 
 
-# for storing mentor skills of each mentor
+#Role: for storing mentor skills of each mentor
+#input: no input
+#Output: no output
 def store_mentor_skills():
     length_of_skills = len(new_mentor_skills)
 
@@ -341,7 +361,9 @@ def store_mentor_skills():
             print(user_objects.skills)
 
 
-# function for replacing a category
+#Role: function for replacing a category
+#input: no input
+#Output: no output
 def replace_category():
     no_values = ['']
     for k in range(0, 253):
@@ -371,7 +393,9 @@ def replace_category():
         print(new_temp)
 
 
-# for printing distribution of SVM categories
+#Role: for printing distribution of SVM categories
+#input: no input
+#Output: no output
 def show_distribution():
 
     count_e_s = 0

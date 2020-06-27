@@ -7,6 +7,7 @@ Created on Thu May 28 21:00:56 2020
 from gensim.summarization import keywords
 import string
 import re
+import random
 import numpy as np
 import pandas as pd
 #from proptodict import *
@@ -197,6 +198,13 @@ def allocate(mentor_data,proposal_data):
             temp.append(p)
       proposal_data = temp
       return_list.append([name,allocated])
+
+   if len(proposal_data) > 0:
+      for i in proposal_data:
+         mentor = random.randint(0, len(return_list)-2)
+         return_list[mentor][1].append(i['id'])
+         #print(return_list[mentor][0], i['id']) 
+
    return return_list
 
 

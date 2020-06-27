@@ -220,7 +220,7 @@ def Login_View(request):
         username = request.POST.get('username')
         # getting the password of current user
         password = request.POST.get('password')
-        print(username, password)
+        #print(username, password)
 
         # check if user has entered correct credentials
         # authenticating current user
@@ -327,7 +327,7 @@ def Admin_view(request):
             user = Mentors.objects.filter(
                 name=new_mentor_name)  # filtering the name
             if user.first() != None:
-                print(user.first().name)
+                #print(user.first().name)
                 # adding the name of the user to the mentor list
                 mentors_list = mentors_list | user
 
